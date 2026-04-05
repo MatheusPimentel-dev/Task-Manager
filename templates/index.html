@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="card mb-4">
+  <div class="card-header">
+    <strong>Nova Tarefa</strong>
+  </div>
+
+  <div class="card-body">
+    <form method="POST" class="row g-3">
+
+      <div class="col-md-4">
+        <input name="title" class="form-control" placeholder="Título da tarefa" required>
+      </div>
+
+      <div class="col-md-2">
+        <input type="number" name="importance" class="form-control" placeholder="Importância" required>
+      </div>
+
+      <div class="col-md-2">
+        <input type="number" name="urgency" class="form-control" placeholder="Urgência" required>
+      </div>
+
+      <div class="col-md-2">
+        <input type="number" name="duration" class="form-control" placeholder="Duração (min)" required>
+      </div>
+
+      <div class="col-md-2">
+        <input type="time" name="scheduled_time" class="form-control">
+      </div>
+
+      <div class="col-12">
+        <label class="form-label">Dias da semana (recorrente)</label><br>
+
+        {% set dias = ['Seg','Ter','Qua','Qui','Sex','Sáb','Dom'] %}
+        {% for i in range(0,7) %}
+          <input type="checkbox" name="days_of_week" value="{{ i }}"> {{ dias[i] }}
+        {% endfor %}
+      </div>
+
+      <div class="col-12">
+        <input type="checkbox" name="fixed" value="1"> Tarefa fixa
+      </div>
+
+      <div class="col-12">
+        <button class="btn btn-primary">Salvar</button>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+<!-- TAREFAS DO DIA -->
+<div class="card mb-4">
+  <div class="card-header bg-primary text-white">
+    Tarefas do Dia
+  </div>
+
+  <div class="card-body">
+    <table class="table table-striped table-hover">
+      <thead>
+        <tr>
+          <th>Tarefa</th>
+          <th>Peso</th>
+          <th>Duração</th>
+          <th>Horário</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for task in normal_tasks %}
+        <tr>
+          <td>{{ task.title }}</td>
+          <td>
+            <span class="badge bg-danger">{{ task.importance }}</span>
+          </td>
+          <td>{{ task.duration }} min</td>
+          <td>{{ task.scheduled_time }}</td>
+
+          <td>
+            <a href="/edit/{{ task.id }}" class="btn btn-sm btn-warning">Editar</a>
+            <a href="/delete/{{ task.id }}" class="btn btn-sm btn-danger">Excluir</a>
+            <a href="/complete/{{ task.id }}" class="btn btn-sm btn-success">Completar</a>
+          </td>
+        </tr>
+        {% else %}
+        <tr>
+          <td colspan="5" class="text-center">Nenhuma tarefa</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- TAREFAS FIXAS -->
+<div class="card">
+  <div class="card-header bg-secondary text-white">
+    Rotina Fixa
+  </div>
+
+  <div class="card-body">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Tarefa</th>
+          <th>Dias</th>
+          <th>Horário</th>
+          <th>Duração</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for task in fixed_tasks %}
+        <tr>
+          <td>{{ task.title }}</td>
+          <td>{{ task.days_of_week }}</td>
+          <td>{{ task.scheduled_time }}</td>
+          <td>{{ task.duration }} min</td>
+          <td>
+            <a href="/edit/{{ task.id }}" class="btn btn-sm btn-warning">Editar</a>
+            <a href="/delete/{{ task.id }}" class="btn btn-sm btn-danger">Excluir</a>
+          </td>
+        </tr>
+        {% else %}
+        <tr>
+          <td colspan="5" class="text-center">Nenhuma tarefa fixa</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{% endblock %}

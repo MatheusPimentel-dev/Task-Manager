@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="card">
+  <div class="card-header">
+    Editar Tarefa
+  </div>
+
+  <div class="card-body">
+    <form method="POST" class="row g-3">
+
+      <div class="col-md-4">
+        <input name="title" class="form-control" value="{{ task.title }}" required>
+      </div>
+
+      <div class="col-md-2">
+        <input type="number" name="importance" class="form-control" value="{{ task.importance }}">
+      </div>
+
+      <div class="col-md-2">
+        <input type="number" name="urgency" class="form-control" value="{{ task.urgency }}">
+      </div>
+
+      <div class="col-md-2">
+        <input type="number" name="duration" class="form-control" value="{{ task.duration }}">
+      </div>
+
+      <div class="col-md-2">
+        <input type="time" name="scheduled_time" class="form-control">
+      </div>
+
+      <div class="col-12">
+        <button class="btn btn-success">Salvar</button>
+        <a href="/" class="btn btn-secondary">Cancelar</a>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+{% endblock %}
