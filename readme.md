@@ -87,8 +87,3 @@ A aplicação registra o blueprint em `/tasks`.
 ## Notificações (scheduler)
 
 O scheduler roda em background e executa um job a cada 1 minuto para verificar tarefas pendentes e, se configurado, enviar mensagem no Telegram.
-
-## Roadmap (ideias rápidas)
-- Persistir `scheduled_time` como `DateTime` (evitar comparação de string)
-- Melhorar regra de agendamento (janelas e conflitos)
-- Melhorar UX (datas/horários, recorrência, filtros e histórico)
