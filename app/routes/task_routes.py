@@ -17,9 +17,15 @@ def list_tasks():
         days = request.form.getlist("days_of_week")
         days_str = ",".join(days) if days else None
 
-        scheduled_time = datetime.now() + timedelta(minutes=10)
-        scheduled_time = scheduled_time.strftime("%Y-%m-%d %H:%M")
-        
+        scheduled_time = request.form.get("scheduled_time")
+
+        if not scheduled_time:
+            scheduled_time = datetime.now() + timedelta(minutes=10)
+            scheduled_time = scheduled_time.strftime("%Y-%m-%d %H:%M")
+        else:
+            dt = datetime.fromisoformat(scheduled_time)
+            scheduled_time = dt.strftime("%Y-%m-%d %H:%M")
+
         task = TaskService.create_task(title, importance, urgency, duration, scheduled_time, fixed, days_str)
 
     return render_template("task/list.html", 
@@ -35,10 +41,20 @@ def edit(id):
         urgency = int(request.form["urgency"])
         duration = int(request.form["duration"])
 
+        scheduled_time = request.form.get("scheduled_time")
+
+        if not scheduled_time:
+            scheduled_time = datetime.now() + timedelta(minutes=10)
+            scheduled_time = scheduled_time.strftime("%Y-%m-%d %H:%M")
+        else:
+            dt = datetime.fromisoformat(scheduled_time)
+            scheduled_time = dt.strftime("%Y-%m-%d %H:%M")
+
         task['title'] = title
         task['importance'] = importance
         task['urgency'] = urgency
         task['duration'] = duration
+        task['scheduled_time'] = scheduled_time
         
         task = TaskService.update_task(task)
 
