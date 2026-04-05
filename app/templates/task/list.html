@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base/base.html" %}
 
 {% block content %}
 
@@ -15,15 +15,15 @@
       </div>
 
       <div class="col-md-2">
-        <input type="number" name="importance" class="form-control" placeholder="Importância" required>
+        <input type="number" name="importance" class="form-control" placeholder="Importância" min="0" max="10" required>
       </div>
 
       <div class="col-md-2">
-        <input type="number" name="urgency" class="form-control" placeholder="Urgência" required>
+        <input type="number" name="urgency" class="form-control" placeholder="Urgência" min="0" max="10" required>
       </div>
 
       <div class="col-md-2">
-        <input type="number" name="duration" class="form-control" placeholder="Duração (min)" required>
+        <input type="number" name="duration" class="form-control" placeholder="Duração (min)" min="1" required>
       </div>
 
       <div class="col-md-2">
@@ -33,7 +33,7 @@
       <div class="col-12">
         <label class="form-label">Dias da semana (recorrente)</label><br>
 
-        {% set dias = ['Seg','Ter','Qua','Qui','Sex','Sáb','Dom'] %}
+        {% set dias = ['Seg.','Ter.','Qua.','Qui.','Sex.','Sáb.','Dom.'] %}
         {% for i in range(0,7) %}
           <input type="checkbox" name="days_of_week" value="{{ i }}"> {{ dias[i] }}
         {% endfor %}
@@ -46,6 +46,24 @@
       <div class="col-12">
         <button class="btn btn-primary">Salvar</button>
       </div>
+
+      <div class="col-5">
+        <h5>Importância</h5>
+        <ul>
+          <li><strong>Afeta renda:</strong> 9(baixa) a 10 (alta)</li>
+          <li><strong>Afeta rotina:</strong> 6(baixa) a 8 (alta)</li>
+          <li><strong>Só conforto/lazer:</strong> 1(baixa) a 5 (alta)</li>
+        </ul>
+      </div>
+      <div class="col-5">
+        <h5>Urgência</h5>
+        <ul>
+          <li><strong>Prazo hoje:</strong> 9(baixa) a 10 (alta)</li>
+          <li><strong>Prazo essa semana:</strong> 6(baixa) a 8 (alta)</li>
+          <li><strong>Sem prazo:</strong> 1(baixa) a 5 (alta)</li>
+        </ul>
+      </div>
+
 
     </form>
   </div>
@@ -80,9 +98,9 @@
           <td>{{ task.scheduled_time }}</td>
 
           <td>
-            <a href="/edit/{{ task.id }}" class="btn btn-sm btn-warning">Editar</a>
-            <a href="/delete/{{ task.id }}" class="btn btn-sm btn-danger">Excluir</a>
-            <a href="/complete/{{ task.id }}" class="btn btn-sm btn-success">Completar</a>
+            <a href="/tasks/edit/{{ task.id }}" class="btn btn-sm btn-warning">Editar</a>
+            <a href="/tasks/delete/{{ task.id }}" class="btn btn-sm btn-danger">Excluir</a>
+            <a href="/tasks/complete/{{ task.id }}" class="btn btn-sm btn-success">Completar</a>
           </td>
         </tr>
         {% else %}
@@ -121,8 +139,8 @@
           <td>{{ task.scheduled_time }}</td>
           <td>{{ task.duration }} min</td>
           <td>
-            <a href="/edit/{{ task.id }}" class="btn btn-sm btn-warning">Editar</a>
-            <a href="/delete/{{ task.id }}" class="btn btn-sm btn-danger">Excluir</a>
+            <a href="/tasks/edit/{{ task.id }}" class="btn btn-sm btn-warning">Editar</a>
+            <a href="/tasks/delete/{{ task.id }}" class="btn btn-sm btn-danger">Excluir</a>
           </td>
         </tr>
         {% else %}
