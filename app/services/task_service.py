@@ -77,9 +77,16 @@ class TaskService:
         return free_slots
     
     @staticmethod
-    def free_slots(fixed_tasks):
+    def free_slots(fixed_tasks):    
+
+        horarioInicio = 5
+        horarioFim = 23
+
         now = datetime.now()
-        end_day = now.replace(hour=23, minute=0)
+        if(now.hour < horarioInicio):
+            now = now.replace(hour=horarioInicio, minute=0)
+
+        end_day = now.replace(hour=horarioFim, minute=0)
 
         blocks = TaskService.get_fixed_blocks(fixed_tasks, now.weekday())
         free_slots = TaskService.find_free_slots(blocks, now, end_day)
