@@ -5,7 +5,7 @@ class TaskRepository:
 
     @staticmethod
     def get_by_id(id):
-        return Task.query.get(id)
+        return db.session.get(Task, id)
 
     @staticmethod
     def get_all():
@@ -29,7 +29,7 @@ class TaskRepository:
     
     @staticmethod
     def update(task):
-        taskdb = Task.query.get(task['id'])
+        taskdb = db.session.get(Task, task['id'])
         if not taskdb:
             return None
         

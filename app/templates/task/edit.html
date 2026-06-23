@@ -15,19 +15,33 @@
       </div>
 
       <div class="col-md-2">
-        <input type="number" name="importance" class="form-control" value="{{ task.importance }}">
+        <input type="number" name="importance" class="form-control" value="{{ task.importance }}" min="0" max="10" required>
       </div>
 
       <div class="col-md-2">
-        <input type="number" name="urgency" class="form-control" value="{{ task.urgency }}">
+        <input type="number" name="urgency" class="form-control" value="{{ task.urgency }}" min="0" max="10" required>
       </div>
 
       <div class="col-md-2">
-        <input type="number" name="duration" class="form-control" value="{{ task.duration }}">
+        <input type="number" name="duration" class="form-control" value="{{ task.duration }}" min="1" required>
       </div>
 
       <div class="col-md-2">
-        <input type="datetime-local" name="scheduled_time" class="form-control" value="{{ task.scheduled_time }}">
+        <input type="datetime-local" name="scheduled_time" class="form-control" value="{{ scheduled_time_value }}">
+      </div>
+
+      <div class="col-12">
+        <label class="form-label">Dias da semana (recorrente)</label><br>
+
+        {% set dias = ['Seg.','Ter.','Qua.','Qui.','Sex.','SÃ¡b.','Dom.'] %}
+        {% set selected_days = task.days_of_week.split(',') if task.days_of_week else [] %}
+        {% for i in range(0,7) %}
+          <input type="checkbox" name="days_of_week" value="{{ i }}" {% if i|string in selected_days %}checked{% endif %}> {{ dias[i] }}
+        {% endfor %}
+      </div>
+
+      <div class="col-12">
+        <input type="checkbox" name="fixed" value="1" {% if task.fixed %}checked{% endif %}> Tarefa fixa
       </div>
 
       <div class="col-12">

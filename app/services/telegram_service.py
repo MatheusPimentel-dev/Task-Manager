@@ -10,11 +10,18 @@ class TelegramService:
         TOKEN = os.getenv("TELEGRAM_TOKEN")
         CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
 
+        if not TOKEN or not CHAT_ID:
+            return False
+
         url = f"https://api.telegram.org/bot{TOKEN}/sendMessage"
         data = {
             "chat_id": CHAT_ID,
             "text": text
         }
-        requests.post(url, data=data)
 
+        try:
+            response = requests.post(url, data=data, timeout=10)
+            return response.ok
+        except requests.RequestException:
+            return False
 
